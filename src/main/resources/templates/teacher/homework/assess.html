@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+<section layout:fragment="content">
+<h1>숙제 평가 페이지</h1>
+    <table class="table_rows mb30">
+        <thead class="table_cols">
+            <tr>
+                <th>숙제명</th>
+                <th>내용</th>
+                <th>그룹명</th>
+                <th>숙제레벨</th>
+                <th>제출마감</th>
+            </tr>
+            <tr th:if="${items == null || items.isEmpty()}">
+                <td colspan="6">숙제 정보가 없습니다.</td>
+            </tr>
+            <tr th:unless="${items == null || items.isEmpty()}" th:each="item : ${items}" th:object="${item}" th:id="*{'homework_' + num}" th:value="*{num}" ondblclick="updateTrainingData(this);" class="selected">
+                <td th:text="*{name}"></td>
+                <td th:text="*{content}"></td>
+                <td th:text="*{studyGroup.name}"></td>
+                <td th:text="*{studyLevel}"></td>
+                <td th:text="*{deadLine}"></td>
+            </tr>
+            <tr>
+                <th colspan="6">숙제를 더블클릭하세요.</th>
+            </tr>
+        </thead>
+
+    </table>
+    <form method="post" id="assessFrm" name="assessFrm" th:action="@{/teacher/homework/assess}">
+        <table class="table_rows mb30">
+            <thead class="table_cols">
+                <tr>
+                    <th>학습자명</th>
+                    <th>전송 일자</th>
+                    <th>숙제 정답</th>
+                    <th>질문 사항</th>
+                    <th>제출 시간</th>
+                    <th>평가</th>
+                </tr>
+            </thead>
+            <tbody  id="homework_trainingData">
+                <tr>
+                    <th colspan="6"><h1>숙제를 더블클릭하세요.</h1></th>
+                </tr>
+
+            </tbody>
+        </table>
+        <div class="submit_btns">
+            <button type="reset" class="sbtn">다시하기</button>
+            <button type="submit" id="submit" class="sbtn on">저장하기</button>
+        </div>
+    </form>
+
+
+</section>
+</html>

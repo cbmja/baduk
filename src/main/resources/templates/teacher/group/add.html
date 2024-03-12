@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<section layout:fragment="content">
+    <h1>스터디 그룹 생성 UI-W-010</h1>
+
+    <div th:if="${mode_.equals('add1')}">
+
+        <form method="get" th:action="@{/teacher/group/add}" autocomplete="off" th:object="${orderSearch}">
+            <table class="table_cols">
+                <tr>
+                    <th width="180">검색</th>
+                    <td>
+                        <div class="input_grp">
+                            <select name="sopt">
+                                <option value="ALL" th:field="*{sopt}">통합검색</option>
+                                <option value="gameTitle" th:field="*{sopt}">게임콘텐츠명</option>
+                            </select>
+                            <input type="text" name="skey" th:field="*{skey}">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="submit_btns">
+                <button type="submit" class="btn">검색하기</button>
+            </div>
+        </form>
+
+
+        <form method="post" th:action="@{/teacher/group/add2}">
+            <input type="hidden" name="mode" value="add" >
+
+            <div th:replace="~{teacher/group/_form::form}"></div>
+            <button type="submit">학습 그룹 상세 입력</button>
+        </form>
+    </div>
+    <div th:if="${mode_.equals('add2')}">
+        <form method="post" th:action="@{/teacher/group/save}">
+            <input type="hidden" name="mode" value="add" >
+
+            <div th:replace="~{teacher/group/_form2::form}"></div>
+            <button type="submit">등록</button>
+        </form>
+    </div>
+
+
+</section>
+</html>

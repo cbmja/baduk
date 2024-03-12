@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:div th:fragment="form"><!-- th:if="${requestStGroup != null}" th:object="${requestStGroup}"-->
+
+    <h2>스터디 그룹 등록 / 게임 선택</h2>
+
+    <div th:if="${mode == 'edit'}">
+        <input type="hidden" name="num" th:value="*{num}">
+    </div>
+    <table class="table_rows">
+        <thead>
+        <tr>
+            <th>선택</th>
+            <th>컨텐츠명</th>
+            <th>썸네일</th>
+            <th>구독 기간</th>
+            <th>개월</th>
+            <th>최대 학습가능인원</th>
+            <th>그룹 개설 가능 인원</th>
+            <th>개설 현황</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game : ${items}" th:object="${game}">
+            <div th:if="*{gameContent.stgroupCount2 >0}">
+                <td>
+                    <input type="radio" name="num" th:value="*{gameContent.num}">
+                </td>
+                <th th:text="*{gameContent.gameTitle}"></th>
+                <td>
+                    <th:block th:if="*{gameContent != null && gameContent.thumbnail != null}" th:utext="*{@utils.printThumb(gameContent.thumbnail.seq, 100, 100, 'image')}"></th:block>
+
+                </td>
+                <td th:text="*{gameContent.startDate+ '~' +gameContent.endDate}"></td>
+                <td th:text="*{gameContent.subscriptionMonths}"></td>
+                <td th:text="*{gameContent.maxSubscriber}"></td>
+                <td th:text="*{gameContent.stgroupCount2}"></td>
+                <td th:text="*{gameContent.maxSubscriber - gameContent.stgroupCount2}"></td>
+            </div>
+
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${emsg != null}">
+        <div th:text="${emsg}" class="error"></div>
+    </div>
+
+    <hr>
+    <th:block th:replace="~{common/_pagination::pagination}"></th:block>
+
+
+</th:div>
+</html>

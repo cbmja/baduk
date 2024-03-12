@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/main}">
+
+<section layout:fragment="content">
+    <h1>숙제 수정</h1>
+    <form method="post" th:action="@{/teacher/homework/save}" autocomplete="off" th:object="${requestHomework}">
+        <input type="hidden" th:field="*{num}">
+        <input type="hidden" th:field="*{mode}" value="edit">
+        <th:block th:replace="~{teacher/homework/_form2::save}"></th:block>
+        <div class="submit_btns">
+            <button type="reset" class="sbtn">다시하기</button>
+            <button type="submit" class="sbtn on">수정하기</button>
+        </div>
+    </form>
+</section>
+</html>
